@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="crudapp.model.Developer" table="DEVELOPERS">
+        <meta attribute="class-description">
+            This class contains developer's details.
+        </meta>
+        <id name="id" type="int" column="ID">
+            <generator class="native"/>
+        </id>
+        <property name="firstName" column="FIRST_NAME" type="string"/>
+        <property name="lastName" column="LAST_NAME" type="string"/>
+
+
+        <set name="SkillList" cascade="save-update" table="DEVELOPER_SKILLS">
+            <key column="DEVELOPER_ID" />
+            <many-to-many column="SKILL_ID" class="crudapp.model.Skill"/>
+        </set>
+        <many-to-one name="specialty" column="SPECIALTY" not-null="true"
+                     class="crudapp.model.Specialty"/>
+        <property name="Status" column="STATUS" type="">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">crudapp.model.Status</param>
+            </type>
+        </property>
+    </class>
+    <class name="crudapp.model.Skill" table="Skills">
+        <meta attribute="class-description">
+            This class contains skills details.
+        </meta>
+        <id name="id" type="int" column="ID">
+            <generator class="native"/>
+        </id>
+        <property name="Name" column="NAME" type="string"/>
+        <property name="Status" column="STATUS" type="">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">crudapp.model.Status</param>
+            </type>
+        </property>
+    </class>
+    <class name="crudapp.model.Specialty" table="Specialties">
+        <meta attribute="class-description">
+            This class contains specialties details.
+        </meta>
+        <id name="id" type="int" column="ID">
+            <generator class="native"/>
+        </id>
+        <property name="Name" column="NAME" type="string"/>
+        <property name="Status" column="STATUS" type="">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">crudapp.model.Status</param>
+            </type>
+        </property>
+    </class>
+</hibernate-mapping>
